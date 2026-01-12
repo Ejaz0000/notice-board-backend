@@ -22,6 +22,7 @@ exports.createNotice = async (req, res) => {
     const attachments = files.map((file) => ({
       fileName: file.originalname,
       filePath: file.path,
+      publicId: file.filename,
     }));
 
    
@@ -96,6 +97,7 @@ exports.createDraft = async (req, res) => {
     const attachments = files.map((file) => ({
       fileName: file.originalname,
       filePath: file.path,
+      publicId: file.filename,
     }));
 
     

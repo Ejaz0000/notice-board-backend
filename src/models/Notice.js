@@ -62,6 +62,7 @@ const noticeSchema = new mongoose.Schema(
       {
         fileName: String,
         filePath: String,
+        publicId: String,
       },
     ],
 
