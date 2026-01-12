@@ -1,10 +1,12 @@
 const multer = require("multer");
 const path = require("path");
 const fs = require("fs");
+const os = require("os");
 
-const uploadDir = "uploads/notices";
+const isVercel = process.env.VERCEL === "1";
+const uploadDir = isVercel ? os.tmpdir() : "uploads/notices";
 
-if (!fs.existsSync(uploadDir)) {
+if (!isVercel && !fs.existsSync(uploadDir)) {
   fs.mkdirSync(uploadDir, { recursive: true });
 }
 
