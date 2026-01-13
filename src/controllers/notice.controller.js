@@ -265,7 +265,10 @@ exports.getAllNotices = async (req, res) => {
       filter.publishDate = { $gte: startOfDay, $lte: endOfDay };
     }
 
-    const totalCount = await Notice.countDocuments(filter);
+    const [totalCount, totalDraftCount] = await Promise.all([
+      Notice.countDocuments(filter),
+      Notice.countDocuments({ status: "draft" }),
+    ]);
     const totalPages = Math.ceil(totalCount / limit);
 
     const notices = await Notice.find(filter)
@@ -287,6 +290,7 @@ exports.getAllNotices = async (req, res) => {
       message: "Notices fetched successfully",
       data: {
         notices: formattedNotices,
+        totalDraftCount,
         pagination: {
           currentPage: parseInt(page),
           totalPages,
